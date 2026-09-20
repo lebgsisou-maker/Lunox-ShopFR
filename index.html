@@ -11,10 +11,10 @@
             --card-hover: #1b2131;
             --accent: #10b981;
             --accent-hover: #059669;
-            --discord-color: #5865F2;
             --text-main: #ffffff;
             --text-muted: #9ca3af;
             --danger: #ef4444;
+            --warning: #f59e0b;
             --border: #1f293d;
         }
 
@@ -29,11 +29,11 @@
             background-color: var(--bg-color);
             color: var(--text-main);
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
-        /* Top Bar / Header */
         header {
-            background-color: rgba(19, 23, 34, 0.9);
+            background-color: rgba(19, 23, 34, 0.95);
             backdrop-filter: blur(12px);
             padding: 16px 30px;
             display: flex;
@@ -53,7 +53,9 @@
             font-weight: bold;
             color: var(--accent);
             cursor: pointer;
+            transition: transform 0.2s;
         }
+        .logo-area:hover { transform: scale(1.02); }
 
         .search-container {
             flex: 1;
@@ -71,11 +73,12 @@
             color: white;
             font-size: 14px;
             outline: none;
-            transition: border-color 0.2s;
+            transition: all 0.3s;
         }
 
         .search-bar:focus {
             border-color: var(--accent);
+            box-shadow: 0 0 12px rgba(16, 185, 129, 0.2);
         }
 
         .search-icon {
@@ -84,6 +87,8 @@
             top: 50%;
             transform: translateY(-50%);
             color: var(--text-muted);
+            width: 16px;
+            height: 16px;
         }
 
         .header-actions {
@@ -121,20 +126,20 @@
         .cart-btn-head:hover {
             background-color: var(--accent-hover);
             color: #000;
+            transform: translateY(-1px);
         }
 
-        /* Container Principal */
         .container {
             max-width: 1200px;
             margin: 30px auto;
             padding: 0 20px;
         }
 
-        /* Catégories / Badges Grid (Style LioGen) */
+        /* Catégories Animées */
         .categories-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-            gap: 12px;
+            gap: 14px;
             margin-bottom: 40px;
         }
 
@@ -145,20 +150,28 @@
             padding: 18px 10px;
             text-align: center;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
         }
 
-        .cat-card:hover {
+        .cat-card:hover, .cat-card.active {
             border-color: var(--accent);
-            transform: translateY(-3px);
+            transform: translateY(-5px);
             background-color: var(--card-hover);
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.15);
         }
 
-        .cat-card span {
-            display: block;
-            font-size: 22px;
-            margin-bottom: 6px;
+        .cat-card svg {
+            width: 26px;
+            height: 26px;
+            fill: var(--text-muted);
+            transition: fill 0.3s;
         }
+
+        .cat-card:hover svg, .cat-card.active svg { fill: var(--accent); }
 
         .cat-card h4 {
             font-size: 13px;
@@ -166,21 +179,37 @@
             font-weight: 600;
         }
 
-        /* Hero Banner */
+        .cat-card:hover h4, .cat-card.active h4 { color: var(--text-main); }
+
+        /* Bannière Héroïque Animée */
         .hero-banner {
-            background: linear-gradient(135deg, #131722, #1b2838);
+            background: linear-gradient(135deg, #131722, #112523);
             border: 1px solid var(--border);
             border-radius: 16px;
-            padding: 40px;
+            padding: 45px;
             margin-bottom: 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .hero-banner::after {
+            content: '';
+            position: absolute;
+            right: -50px;
+            bottom: -50px;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(16,185,129,0.15) 0%, transparent 70%);
+            border-radius: 50%;
         }
 
         .hero-text h1 {
             font-size: 32px;
             margin-bottom: 10px;
+            background: linear-gradient(45deg, #ffffff, var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .hero-text p {
@@ -189,13 +218,16 @@
             max-width: 600px;
         }
 
-        /* Grille Produits */
         .section-title {
             font-size: 20px;
             margin-bottom: 20px;
             font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
+        /* Grille Produits */
         .products-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -210,12 +242,36 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            transition: transform 0.2s, border-color 0.2s;
+            transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
 
         .product-card:hover {
-            transform: translateY(-4px);
+            transform: translateY(-6px);
             border-color: var(--accent);
+            box-shadow: 0 12px 30px rgba(16, 185, 129, 0.12);
+        }
+
+        .product-img-box {
+            width: 100%;
+            height: 150px;
+            background-color: #0f121a;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .product-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s;
+        }
+
+        .product-card:hover .product-img-box img {
+            transform: scale(1.05);
         }
 
         .card-top {
@@ -231,24 +287,24 @@
             margin-bottom: 10px;
         }
         .badge-status.stock { background: rgba(16, 185, 129, 0.15); color: var(--accent); }
+        .badge-status.preorder { background: rgba(245, 158, 11, 0.15); color: var(--warning); }
         .badge-status.out { background: rgba(239, 68, 68, 0.15); color: var(--danger); }
 
         .product-card h3 {
-            font-size: 18px;
-            margin-bottom: 6px;
+            font-size: 18px;margin-bottom: 6px;
         }
 
         .product-desc {
             font-size: 13px;
             color: var(--text-muted);
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
 
         .not-trial {
             font-size: 11px;
             color: #fbbf24;
             font-weight: bold;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
         .price-row {
@@ -275,27 +331,17 @@
             font-weight: bold;
             cursor: pointer;
             font-size: 13px;
-            transition: background 0.2s;
+            transition: all 0.2s;
         }
-        .btn-add:hover { background-color: var(--accent-hover); }
+        .btn-add:hover { background-color: var(--accent-hover); transform: scale(1.03); }
         .btn-add.disabled { background-color: var(--border); color: var(--text-muted); cursor: not-allowed; }
 
-        /* VUE CHECKOUT / PANIER STYLE LIOGEN */
-        .checkout-view {
-            display: none;
-        }
-        .checkout-view.active {
-            display: block;
-            animation: fadeIn 0.3s ease;
-        }
-        .shop-view.hidden {
-            display: none;
-        }
+        /* VUE CHECKOUT */
+        .checkout-view { display: none; }
+        .checkout-view.active { display: block; animation: fadeIn 0.3s ease; }
+        .shop-view.hidden { display: none; }
 
-        .checkout-container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
+        .checkout-container { max-width: 800px; margin: 0 auto; }
 
         .back-shop {
             background: none;
@@ -307,6 +353,7 @@
             display: flex;
             align-items: center;
             gap: 6px;
+            transition: color 0.2s;
         }
         .back-shop:hover { color: white; }
 
@@ -319,7 +366,7 @@
         }
 
         .checkout-box h3 {
-            font-size: 16px;
+            font-size: 15px;
             margin-bottom: 15px;
             color: var(--text-muted);
             text-transform: uppercase;
@@ -358,10 +405,10 @@
             border-radius: 6px;
             cursor: pointer;
             font-weight: bold;
+            transition: background 0.2s;
         }
         .qty-btn:hover { background: var(--accent); color: black; }
 
-        /* Grille des moyens de paiement style LioGen */
         .payment-methods-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -385,21 +432,6 @@
             background-color: rgba(16, 185, 129, 0.05);
         }
 
-        .payment-option img, .payment-option svg {
-            width: 32px;
-            height: 32px;
-            object-fit: contain;
-        }
-
-        .payment-info h4 {
-            font-size: 14px;
-            font-weight: bold;
-        }
-        .payment-info p {
-            font-size: 11px;
-            color: var(--text-muted);
-        }
-
         .email-input {
             width: 100%;
             background-color: var(--card-hover);
@@ -409,7 +441,8 @@
             color: white;
             font-size: 14px;
             outline: none;
-            margin-top: 10px;
+            margin-top: 5px;
+            transition: border-color 0.2s;
         }
         .email-input:focus { border-color: var(--accent); }
 
@@ -436,9 +469,9 @@
             cursor: pointer;
             text-align: center;
             text-decoration: none;
-            transition: background 0.2s;
+            transition: all 0.2s;
         }
-        .btn-pay:hover { background-color: var(--accent-hover); }
+        .btn-pay:hover { background-color: var(--accent-hover); box-shadow: 0 5px 20px rgba(16, 185, 129, 0.3); }
 
         footer {
             text-align: center;
@@ -450,7 +483,7 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(5px); }
+            from { opacity: 0; transform: translateY(6px); }
             to { opacity: 1; transform: translateY(0); }
         }
     </style>
@@ -459,12 +492,12 @@
 
     <header>
         <div class="logo-area" onclick="showShopView()">
-            <span>⚡</span> Lunox Shop FR
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg> Lunox Shop FR
         </div>
 
         <div class="search-container">
-            <span class="search-icon">🔍</span>
-            <input type="text" class="search-bar" placeholder="Que recherchez-vous ? Nitro, Robux..." id="searchInput" onkeyup="filterProducts()">
+            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" class="search-bar" placeholder="Rechercher (Nitro, GTA VI, Robux...)" id="searchInput" oninput="filterProducts()">
         </div>
 
         <div class="header-actions">
@@ -476,97 +509,298 @@
 
     <div class="container">
 
-        <!-- VUE BOUTIQUE PRINCIPALE -->
         <div id="shopView" class="shop-view">
             <div class="hero-banner">
                 <div class="hero-text">
-                    <h1>Jeux, abonnements et cartes cadeaux au même endroit.</h1>
-                    <p>Parcours la sélection Lunox Shop et profite de tarifs imbattables avec un paiement 100% sécurisé.</p>
+                    <h1>Jeux, Abonnements & Boosts au meilleur prix.</h1>
+                    <p>Découvre le catalogue complet de Lunox Shop. Livraison ultra-rapide et service sécurisé.</p>
                 </div>
             </div>
 
-            <!-- Catégories style LioGen -->
             <div class="categories-grid">
-                <div class="cat-card" onclick="filterByCategory('all')">
-                    <span>🔥</span>
+                <div class="cat-card active" id="cat-all" onclick="filterByCategory('all', event)">
+                    <svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
                     <h4>Tous</h4>
                 </div>
-                <div class="cat-card" onclick="filterByCategory('nitro')">
-                    <span>⚡</span>
+                <div class="cat-card" id="cat-nitro" onclick="filterByCategory('nitro', event)">
+                    <svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
                     <h4>Discord Nitro</h4>
                 </div>
-                <div class="cat-card" onclick="filterByCategory('gaming')">
-                    <span>🎮</span>
-                    <h4>Jeux & Robux</h4>
+                <div class="cat-card" id="cat-gaming" onclick="filterByCategory('gaming', event)">
+                    <svg viewBox="0 0 24 24"><path d="M21 6H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-10 7H8v3H6v-3H3v-2h3V8h2v3h3v2zm4.5 2c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm3-4c-.83 0-1.5-.67-1.5-1.5S19.67 8 20.5 8s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+                    <h4>Jeux & Préco</h4>
                 </div>
-                <div class="cat-card" onclick="filterByCategory('gift')">
-                    <span>🎁</span>
-                    <h4>Cartes cadeaux</h4>
+                <div class="cat-card" id="cat-streaming" onclick="filterByCategory('streaming', event)">
+                    <svg viewBox="0 0 24 24"><path d="M21 3H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h5v2h8v-2h5c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 14H3V5h18v12z"/></svg>
+                    <h4>Streaming & Subs</h4>
+                </div>
+                <div class="cat-card" id="cat-boosts" onclick="filterByCategory('boosts', event)">
+                    <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                    <h4>Boosts Serveur</h4>
                 </div>
             </div>
 
-            <div class="section-title">Catalogue Populaire</div>
+            <div class="section-title">⚡ Catalogue & Nouveautés</div>
 
             <div class="products-grid" id="productsGrid">
-                <!-- Produit 1 : Nitro 1 Mois -->
+
+                <div class="product-card" data-category="gaming" data-name="gta vi gta 6 precommande">
+                    <div class="product-img-box">
+                        <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=600&auto=format&fit=crop" alt="GTA VI">
+                    </div>
+                    <div class="card-top">
+                        <span class="badge-status preorder">Précommande (19 Nov)</span>
+                        <h3>Grand Theft Auto VI</h3>
+                        <p class="product-desc">Précommande officielle PS5 / Xbox Series.</p>
+                    </div>
+                    <div class="price-row">
+                        <span class="price">69,99 €</span>
+                        <button class="btn-add" onclick="addToCart('GTA VI (Précommande)', 69.99)">Précommander</button>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="gaming" data-name="fc 27 fifa ea sports">
+                    <div class="product-img-box">
+                        <img src="https://images.unsplash.com/photo-1518091043644-c1d4457512c6?q=80&w=600&auto=format&fit=crop" alt="FC 27">
+                    </div>
+                    <div class="card-top">
+                        <span class="badge-status stock">Disponible</span>
+                        <h3>EA SPORTS FC 27</h3>
+                        <p class="product-desc">Jeu complet édition standard PC / Consoles.</p>
+                    </div>
+                    <div class="price-row">
+                        <span class="price">54,99 €</span>
+                        <button class="btn-add" onclick="addToCart('EA SPORTS FC 27', 54.99)">Ajouter</button>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="gaming" data-name="minecraft bedrock java">
+                    <div class="product-img-box">
+                        <img src="https://images.unsplash.com/photo-1627856013091-fed6e4e302e2?q=80&w=600&auto=format&fit=crop" alt="Minecraft">
+                    </div>
+                    <div class="card-top">
+                        <span class="badge-status stock">En Stock</span>
+                        <h3>Minecraft (Java & Bedrock)</h3>
+                        <p class="product-desc">Clé officielle globale pour PC Windows.</p>
+                    </div>
+                    <div class="price-row">
+                        <span class="price">16,99 €</span>
+                        <button class="btn-add" onclick="addToCart('Minecraft Java & Bedrock', 16.99)">Ajouter</button>
+                    </div>
+                </div>
+
                 <div class="product-card" data-category="nitro" data-name="discord nitro 1 mois">
+                    <div class="product-img-box">
+                        <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=600&auto=format&fit=crop" alt="Nitro 1M">
+                    </div>
                     <div class="card-top">
                         <span class="badge-status stock">En Stock</span>
                         <h3>Discord Nitro (1 Mois)</h3>
-                        <p class="product-desc">Tous les avantages Nitro (boosts, emojis animés, HD).</p>
-                        <p class="not-trial">⚠️ Garanti sans arnaque - Ce n'est pas un essai (not a trial).</p>
+                        <p class="product-desc">Tous les avantages Nitro complets.</p>
+                        <p class="not-trial">⚠️ Ce n'est pas un essai (not a trial).</p>
                     </div>
                     <div class="price-row">
                         <span class="price">7,69 €</span>
-                        <button class="btn-add" onclick="addToCart('Discord Nitro (1 Mois)', 7.69, 'nitro-1m')">Ajouter</button>
+                        <button class="btn-add" onclick="addToCart('Discord Nitro (1 Mois)', 7.69)">Ajouter</button>
                     </div>
                 </div>
 
-                <!-- Produit 2 : Nitro 1 An -->
+                <div class="product-card" data-category="nitro" data-name="discord nitro 3 mois">
+                    <div class="product-img-box">
+                        <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=600&auto=format&fit=crop" alt="Nitro 3M">
+                    </div>
+                    <div class="card-top">
+                        <span class="badge-status stock">En Stock</span>
+                        <h3>Discord Nitro (3 Mois)</h3>
+                        <p class="product-desc">Abonnement Nitro valable 90 jours.</p>
+                        <p class="not-trial">⚠️ Ce n'est pas un essai (not a trial).</p>
+                    </div>
+                    <div class="price-row">
+                        <span class="price">19,99 €</span>
+                        <button class="btn-add" onclick="addToCart('Discord Nitro (3 Mois)', 19.99)">Ajouter</button>
+                    </div>
+                </div>
+
                 <div class="product-card" data-category="nitro" data-name="discord nitro 1 an">
+                    <div class="product-img-box">
+                        <img src="https://images.unsplash.com/photo-1538481199705-c710c4e965fc?q=80&w=600&auto=format&fit=crop" alt="Nitro 1 An">
+                    </div>
                     <div class="card-top">
                         <span class="badge-status stock">En Stock</span>
                         <h3>Discord Nitro (1 An)</h3>
-                        <p class="product-desc">Abonnement Nitro complet valable pendant 12 mois.</p>
+                        <p class="product-desc">Abonnement Nitro valable pendant 12 mois.</p>
                         <p class="not-trial">⚠️ Valide 1 an - Ce n'est pas un essai.</p>
                     </div>
                     <div class="price-row">
                         <span class="price">74,99 €</span>
-                        <button class="btn-add" onclick="addToCart('Discord Nitro (1 An)', 74.99, 'nitro-1y')">Ajouter</button>
+                        <button class="btn-add" onclick="addToCart('Discord Nitro (1 An)', 74.99)">Ajouter</button>
                     </div>
                 </div>
 
-                <!-- Produit 3 : Robux -->
-                <div class="product-card" data-category="gaming" data-name="pack robux 1000">
+                <div class="product-card" data-category="gaming" data-name="robux 400 roblox">
+                    <div class="product-img-box">
+                        <img src="https://images.unsplash.com/photo-1614680376593-902f749f7ffc?q=80&w=600&auto=format&fit=crop" alt="Robux">
+                    </div>
                     <div class="card-top">
-                        <span class="badge-status out">Rupture de stock</span>
-                        <h3>Pack 1000 Robux</h3>
-                        <p class="product-desc">Recharge tes Robux directement sur ton profil Roblox.</p>
-                        <p class="not-trial" style="color: var(--text-muted);">🔄 Réapprovisionnement en cours.</p>
+                        <span class="badge-status stock">En Stock</span>
+                        <h3>Pack 400 Robux</h3>
+                        <p class="product-desc">Recharge directe sur votre profil Roblox.</p>
                     </div>
                     <div class="price-row">
-                        <span class="price" style="color: var(--text-muted);">8,99 €</span>
-                        <button class="btn-add disabled" disabled>Indisponible</button>
+                        <span class="price">4,99 €</span>
+                        <button class="btn-add" onclick="addToCart('Pack 400 Robux', 4.99)">Ajouter</button>
                     </div>
                 </div>
+
+                <div class="product-card" data-category="gaming" data-name="robux 800 roblox">
+                    <div class="product-img-box">
+                        <img src="https://images.unsplash.com/photo-1614680376593-902f749f7ffc?q=80&w=600&auto=format&fit=crop" alt="Robux">
+                    </div>
+                    <div class="card-top">
+                        <span class="badge-status stock">En Stock</span>
+                        <h3>Pack 800 Robux</h3>
+                        <p class="product-desc">Recharge directe sur votre profil Roblox.</p>
+                    </div>
+                    <div class="price-row">
+                        <span class="price">8,99 €</span>
+                        <button class="btn-add" onclick="addToCart('Pack 800 Robux', 8.99)">Ajouter</button>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="gaming" data-name="robux 1000 roblox">
+                    <div class="product-img-box">
+                        <img src="https://images.unsplash.com/photo-1614680376593-902f749f7ffc?q=80&w=600&auto=format&fit=crop" alt="Robux">
+                    </div>
+                    <div class="card-top">
+                        <span class="badge-status stock">En Stock</span>
+                        <h3>Pack 1000 Robux</h3>
+                        <p class="product-desc">Recharge directe sur votre profil Roblox.</p>
+                    </div>
+                    <div class="price-row">
+                        <span class="price">10,99 €</span>
+                        <button class="btn-add" onclick="addToCart('Pack 1000 Robux', 10.99)">Ajouter</button>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="gaming" data-name="robux 2000 roblox">
+                    <div class="product-img-box">
+                        <img src="https://images.unsplash.com/photo-1614680376593-902f749f7ffc?q=80&w=600&auto=format&fit=crop" alt="Robux">
+                    </div>
+                    <div class="card-top">
+                        <span class="badge-status stock">En Stock</span>
+                        <h3>Pack 2000 Robux</h3>
+                        <p class="product-desc">Recharge directe sur votre profil Roblox.</p>
+                    </div>
+                    <div class="price-row">
+                        <span class="price">20,99 €</span>
+                        <button class="btn-add" onclick="addToCart('Pack 2000 Robux', 20.99)">Ajouter</button>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="streaming" data-name="youtube premium 1 mois">
+                    <div class="product-img-box">
+                        <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=600&auto=format&fit=crop" alt="YouTube">
+                    </div>
+                    <div class="card-top">
+                        <span class="badge-status stock">En Stock</span>
+                        <h3>YouTube Premium (1 Mois)</h3>
+                        <p class="product-desc">Zéro pub, vidéos en arrière-plan et YouTube Music.</p>
+                    </div>
+                    <div class="price-row">
+                        <span class="price">2,99 €</span>
+                        <button class="btn-add" onclick="addToCart('YouTube Premium (1 Mois)', 2.99)">Ajouter</button>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="streaming" data-name="youtube premium 1 an">
+                    <div class="product-img-box">
+                        <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=600&auto=format&fit=crop" alt="YouTube">
+                    </div>
+                    <div class="card-top">
+                        <span class="badge-status stock">En Stock</span>
+                        <h3>YouTube Premium (1 An)</h3>
+                        <p class="product-desc">Abonnement YouTube Premium complet pendant 12 mois.</p>
+                    </div>
+                    <div class="price-row">
+                        <span class="price">24,99 €</span>
+                        <button class="btn-add" onclick="addToCart('YouTube Premium (1 An)', 24.99)">Ajouter</button>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="boosts" data-name="boosts serveur discord 14x 1 mois">
+                    <div class="product-img-box">
+                        <img src="https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=600&auto=format&fit=crop" alt="Boosts">
+                    </div>
+                    <div class="card-top">
+                        <span class="badge-status stock">En Stock</span>
+                        <h3>14x Boosts Serveur (1 Mois)</h3>
+                        <p class="product-desc">Passe ton serveur Discord au Niveau 3 instantanément.</p>
+                    </div>
+                    <div class="price-row">
+                        <span class="price">12,99 €</span>
+                        <button class="btn-add" onclick="addToCart('14x Boosts Serveur (1 Mois)', 12.99)">Ajouter</button>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="boosts" data-name="boosts serveur discord 14x 3 mois">
+                    <div class="product-img-box">
+                        <img src="https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=600&auto=format&fit=crop" alt="Boosts">
+                    </div>
+                    <div class="card-top">
+                        <span class="badge-status stock">En Stock</span>
+                        <h3>14x Boosts Serveur (3 Mois)</h3>
+                        <p class="product-desc">Niveau 3 garanti sur votre serveur pendant 90 jours.</p>
+                    </div>
+                    <div class="price-row">
+                        <span class="price">29,99 €</span>
+                        <button class="btn-add" onclick="addToCart('14x Boosts Serveur (3 Mois)', 29.99)">Ajouter</button>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="boosts" data-name="boosts serveur discord 20x 1 mois">
+                    <div class="product-img-box">
+                        <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=600&auto=format&fit=crop" alt="Boosts">
+                    </div>
+                    <div class="card-top">
+                        <span class="badge-status stock">En Stock</span>
+                        <h3>20x Boosts Serveur (1 Mois)</h3>
+                        <p class="product-desc">Max boosts pour un serveur ultra-sécurisé et dynamique.</p>
+                    </div>
+                    <div class="price-row">
+                        <span class="price">16,99 €</span>
+                        <button class="btn-add" onclick="addToCart('20x Boosts Serveur (1 Mois)', 16.99)">Ajouter</button>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="boosts" data-name="boosts serveur discord 20x 3 mois">
+                    <div class="product-img-box">
+                        <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=600&auto=format&fit=crop" alt="Boosts">
+                    </div>
+                    <div class="card-top">
+                        <span class="badge-status stock">En Stock</span>
+                        <h3>20x Boosts Serveur (3 Mois)</h3>
+                        <p class="product-desc">20 boosts valables 3 mois complets pour votre communauté.</p>
+                    </div>
+                    <div class="price-row">
+                        <span class="price">39,99 €</span>
+                        <button class="btn-add" onclick="addToCart('20x Boosts Serveur (3 Mois)', 39.99)">Ajouter</button>
+                    </div>
+                </div>
+
             </div>
         </div>
 
-        <!-- VUE CHECKOUT (PANIER & PAIEMENT STYLE LIOGEN) -->
         <div id="checkoutView" class="checkout-view">
             <button class="back-shop" onclick="showShopView()">← Retour à la boutique</button>
             
             <div class="checkout-container">
                 <div class="checkout-box">
                     <h3>1. Récapitulatif de votre panier</h3>
-                    <div class="cart-items-list" id="checkoutItemsList">
-                        <!-- Les articles s'affichent ici dynamiquement -->
-                    </div>
+                    <div class="cart-items-list" id="checkoutItemsList"></div>
                 </div>
 
                 <div class="checkout-box">
                     <h3>2. Suivi de commande (Lié à Discord)</h3>
-                    <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 8px;">Votre commande sera liée à votre profil Discord. Vous pouvez ajouter un e-mail facultatif.</p>
                     <input type="email" class="email-input" placeholder="E-mail de livraison (facultatif)..." id="clientEmail">
                 </div>
 
@@ -574,20 +808,10 @@
                     <h3>3. Choisis ton moyen de paiement</h3>
                     <div class="payment-methods-grid">
                         <div class="payment-option selected" onclick="selectPayment('paypal', this)">
-                            <!-- Logo SVG PayPal -->
                             <svg viewBox="0 0 32 32" width="32" height="32"><path fill="#003087" d="M25.5 11.2c-.3-1.5-1.2-2.7-2.6-3.4-1.4-.7-3.2-1.1-5.4-1.1h-7c-.4 0-.8.3-.9.7l-3.3 21c0 .2.1.4.3.4h4.4l1.1-7.1h2.5c4.3 0 7.7-1.7 8.7-6.7.5-2.4 0-3.2-1.8-3.8z"/><path fill="#0079c1" d="M27 9.8c-.4-1.8-1.5-3.1-3.1-3.8-1.6-.7-3.7-1.1-6.2-1.1h-7.6c-.4 0-.8.3-.9.7L5 27.5c0 .2.2.4.4.4h4.6l1.2-7.8h3c4.7 0 8.4-1.8 9.5-7.2.5-2.3 0-3.1-1.7-3.1z"/></svg>
-                            <div class="payment-info">
-                               <h4>PayPal</h4>
-                               <p>Compte & Cartes bancaires</p>
-                            </div>
-                        </div>
-
-                        <div class="payment-option" onclick="selectPayment('card', this)">
-                            <!-- Logo SVG Carte Bancaire -->
-                            <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="#10b981" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" /><line x1="1" y1="10" x2="23" y2="10" /></svg>
-                            <div class="payment-info">
-                                <h4>Carte Bancaire</h4>
-                                <p>Via PayPal Business</p>
+                            <div>
+                                <h4 style="font-size: 14px;">PayPal</h4>
+                                <p style="font-size: 11px; color: var(--text-muted);">Compte & Cartes</p>
                             </div>
                         </div>
                     </div>
@@ -598,6 +822,114 @@
                         <span>Total à payer :</span>
                         <span id="checkoutTotalPrice" style="color: var(--accent);">0,00 €</span>
                     </div>
-                    <!-- Remplace par le lien PayPal.me de zk2 -->
                     <a href="https://paypal.me/TONCOMPTE" target="_blank" class="btn-pay">Procéder au paiement sécurisé</a>
-          
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Lunox Shop FR - Tous droits réservés.</p>
+    </footer>
+
+    <script>
+        let cart = [];
+
+        function addToCart(name, price) {
+            const existing = cart.find(item => item.name === name);
+            if (existing) {
+                existing.qty += 1;
+            } else {
+                cart.push({ name: name, price: price, qty: 1 });
+            }
+            updateCartUI();
+        }
+
+        function changeQty(index, delta) {
+            cart[index].qty += delta;
+            if (cart[index].qty <= 0) {
+                cart.splice(index, 1);
+            }
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            let totalCount = 0;
+            let totalPrice = 0;
+            let listHTML = '';
+
+            cart.forEach((item, index) => {
+                totalCount += item.qty;
+                let itemTotal = item.price * item.qty;
+                totalPrice += itemTotal;
+
+                listHTML += `
+                    <div class="checkout-item">
+                        <div>
+                            <strong>${item.name}</strong><br>
+                            <span style="color: var(--accent); font-size: 13px;">${item.price.toFixed(2)} €</span>
+                        </div>
+                        <div class="qty-control">
+                            <button class="qty-btn" onclick="changeQty(${index}, -1)">-</button>
+                            <span style="font-weight: bold; font-size: 14px;">${item.qty}</span>
+                            <button class="qty-btn" onclick="changeQty(${index}, 1)">+</button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            document.getElementById('headerCartCount').textContent = totalCount;
+            document.getElementById('checkoutItemsList').innerHTML = listHTML || '<p style="color: var(--text-muted); text-align: center;">Votre panier est vide.</p>';
+            document.getElementById('checkoutTotalPrice').textContent = totalPrice.toFixed(2) + ' €';
+        }
+
+        function showCheckoutView() {
+            document.getElementById('shopView').classList.add('hidden');
+            document.getElementById('checkoutView').classList.add('active');
+            updateCartUI();
+        }
+
+        function showShopView() {
+            document.getElementById('checkoutView').classList.remove('active');
+            document.getElementById('shopView').classList.remove('hidden');
+        }
+
+        function selectPayment(method, element) {
+            document.querySelectorAll('.payment-option').forEach(el => el.classList.remove('selected'));
+            element.classList.add('selected');
+        }
+
+        function filterProducts() {
+            let query = document.getElementById('searchInput').value.toLowerCase().trim();
+            let cards = document.querySelectorAll('.product-card');
+
+            cards.forEach(card => {
+                let name = card.getAttribute('data-name');
+                if (name.includes(query)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        function filterByCategory(category, event) {
+            document.querySelectorAll('.cat-card').forEach(el => el.classList.remove('active'));
+            if(event && event.currentTarget) {
+                event.currentTarget.classList.add('active');
+            }
+
+            let cards = document.querySelectorAll('.product-card');
+            cards.forEach(card => {
+                let cat = card.getAttribute('data-category');
+                if (category === 'all' || cat === category) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
