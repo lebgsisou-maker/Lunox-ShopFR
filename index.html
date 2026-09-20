@@ -6,14 +6,16 @@
     <title>Lunox Shop FR - Boutique Officielle</title>
     <style>
         :root {
-            --bg-color: #0f1016;
-            --card-bg: #181a26;
+            --bg-color: #0b0c10;
+            --card-bg: #151720;
+            --card-hover: #1c1f2b;
             --accent: #5865F2;
             --accent-hover: #4752C4;
             --text-main: #ffffff;
-            --text-muted: #b9bbbe;
+            --text-muted: #949ba4;
             --danger: #ed4245;
             --success: #3ba55d;
+            --border: #23272a;
         }
 
         * {
@@ -27,23 +29,61 @@
             background-color: var(--bg-color);
             color: var(--text-main);
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
+        /* Header & Navbar */
         header {
-            background-color: var(--card-bg);
+            background-color: rgba(21, 23, 32, 0.9);
+            backdrop-filter: blur(10px);
             padding: 20px 40px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid #2f3136;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         .logo {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: bold;
             color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
+        .cart-btn {
+            background-color: var(--card-hover);
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            padding: 10px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .cart-btn:hover {
+            background-color: var(--accent);
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .cart-count {
+            background-color: var(--accent);
+            color: white;
+            padding: 2px 6px;
+            border-radius: 50%;
+            font-size: 12px;
+        }
+
+        /* Container */
         .container {
             max-width: 1100px;
             margin: 40px auto;
@@ -53,11 +93,15 @@
         .hero {
             text-align: center;
             margin-bottom: 50px;
+            animation: fadeInDown 0.8s ease;
         }
 
         .hero h1 {
-            font-size: 38px;
+            font-size: 42px;
             margin-bottom: 10px;
+            background: linear-gradient(45deg, #ffffff, var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .hero p {
@@ -65,6 +109,7 @@
             font-size: 18px;
         }
 
+        /* Grid Produits */
         .products-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -73,30 +118,33 @@
 
         .card {
             background-color: var(--card-bg);
-            border-radius: 12px;
+            border-radius: 14px;
             overflow: hidden;
-            border: 1px solid #2f3136;
+            border: 1px solid var(--border);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            transition: transform 0.2s;
+            transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+            animation: fadeInUp 0.8s ease;
         }
 
         .card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-6px);
+            border-color: var(--accent);
+            box-shadow: 0 10px 30px rgba(88, 101, 242, 0.15);
         }
 
         .card-content {
-            padding: 20px;
+            padding: 24px;
         }
 
-        .card title {
-            font-size: 20px;
-            margin-bottom: 10px;
+        .card h3 {
+            font-size: 22px;
+            margin-bottom: 8px;
         }
 
         .price {
-            font-size: 22px;
+            font-size: 24px;
             font-weight: bold;
             color: var(--success);
             margin: 15px 0;
@@ -104,7 +152,7 @@
 
         .badge {
             display: inline-block;
-            padding: 5px 10px;
+            padding: 4px 10px;
             border-radius: 6px;
             font-size: 12px;
             font-weight: bold;
@@ -129,43 +177,170 @@
             background-color: var(--accent);
             color: white;
             text-decoration: none;
-            border-radius: 6px;
+            border-radius: 8px;
             font-weight: bold;
             border: none;
             cursor: pointer;
-            transition: background 0.2s;
+            transition: background 0.2s, transform 0.1s;
         }
 
         .btn:hover {
             background-color: var(--accent-hover);
         }
 
+        .btn:active {
+            transform: scale(0.98);
+        }
+
         .btn.disabled {
-            background-color: #2f3136;
+            background-color: #23272a;
             color: var(--text-muted);
             cursor: not-allowed;
         }
 
+        /* Panier Latéral (Sidebar) */
+        .cart-sidebar {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 380px;
+            height: 100%;
+            background-color: var(--card-bg);
+            border-left: 1px solid var(--border);
+            box-shadow: -5px 0 25px rgba(0,0,0,0.5);
+            transition: right 0.4s cubic-bezier(0.1, 0.9, 0.2, 1);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            padding: 25px;
+        }
+
+        .cart-sidebar.open {
+            right: 0;
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .close-cart {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 22px;
+            cursor: pointer;
+        }
+
+        .close-cart:hover {
+            color: var(--text-main);
+        }
+
+        .cart-items {
+            flex-grow: 1;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--card-hover);
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .remove-item {
+            color: var(--danger);
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .cart-total {
+            font-size: 18px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            border-top: 1px solid var(--border);
+            padding-top: 15px;
+        }
+
+        /* Section Paiement / Badoges */
+        .payment-methods {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .payment-methods p {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .payment-icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            font-size: 14px;
+            font-weight: bold;
+            color: var(--text-main);
+        }
+
+        .badge-pay {
+            background: var(--card-hover);
+            padding: 6px 12px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+        }
+
+        /* Footer */
         footer {
             text-align: center;
             padding: 30px;
             color: var(--text-muted);
-            border-top: 1px solid #2f3136;
-            margin-top: 50px;
+            border-top: 1px solid var(--border);
+            margin-top: 60px;
+            font-size: 14px;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="logo">Lunox Shop FR</div>
-        <div>Paiement sécurisé via PayPal</div>
+        <div class="logo">⚡ Lunox Shop FR</div>
+        <button class="cart-btn" onclick="toggleCart()">
+            🛒 Panier <span class="cart-count" id="cartCount">0</span>
+        </button>
     </header>
 
     <div class="container">
         <div class="hero">
             <h1>Bienvenue sur Lunox Shop FR</h1>
-            <p>Tes abonnements Discord et jeux au meilleur prix.</p>
+            <p>Tes abonnements Discord et jeux au meilleur prix du marché.</p>
         </div>
 
         <div class="products-grid">
@@ -174,12 +349,11 @@
                 <div class="card-content">
                     <h3>Discord Nitro</h3>
                     <span class="badge stock">En Stock</span>
-                    <p style="color: var(--text-muted);">Profite de tous les avantages Nitro au meilleur tarif.</p>
+                    <p style="color: var(--text-muted);">Profite de tous les avantages Nitro (boosts, emojis animés, streaming HD).</p>
                     <div class="price">7,69 €</div>
                 </div>
-                <div style="padding: 20px;">
-                    <!-- Remplace le lien '#' par ton lien de paiement PayPal.me ou ton bouton de commande -->
-                    <a href="https://paypal.me/TONCOMPTE" target="_blank" class="btn">Acheter via PayPal</a>
+                <div style="padding: 0 24px 24px 24px;">
+                    <button class="btn" onclick="addToCart('Discord Nitro', 7.69)">Ajouter au panier</button>
                 </div>
             </div>
 
@@ -188,19 +362,101 @@
                 <div class="card-content">
                     <h3>Pack Robux (1000 Robux)</h3>
                     <span class="badge out">Rupture de stock</span>
-                    <p style="color: var(--text-muted);">Recharge tes Robux instantanément sur ton compte Roblox.</p>
+                    <p style="color: var(--text-muted);">Recharge tes Robux directement sur ton profil Roblox.</p>
                     <div class="price" style="color: var(--text-muted);">Indisponible</div>
                 </div>
-                <div style="padding: 20px;">
+                <div style="padding: 0 24px 24px 24px;">
                     <button class="btn disabled" disabled>Bientôt de retour</button>
                 </div>
             </div>
+        </div>
+
+        <!-- Section Moyens de Paiement -->
+        <div class="payment-methods">
+            <p>Moyens de paiement acceptés et sécurisés :</p>
+            <div class="payment-icons">
+                <span class="badge-pay">🛡️ PayPal (Compte & Cartes Bancaires)</span>
+                <span class="badge-pay">💳 Mastercard</span>
+                <span class="badge-pay">💳 Visa</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Panier Latéral -->
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3>Ton Panier</h3>
+            <button class="close-cart" onclick="toggleCart()">&times;</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <p style="color: var(--text-muted); text-align: center; margin-top: 40px;">Ton panier est vide.</p>
+        </div>
+        <div>
+            <div class="cart-total">
+                <span>Total :</span>
+                <span id="cartTotal">0,00 €</span>
+            </div>
+            <!-- Remplace le lien ci-dessous par le lien de paiement de ton choix ou ton PayPal.me -->
+            <a href="https://paypal.me/TONCOMPTE" target="_blank" class="btn" style="text-align: center; display: block;">Payer via PayPal</a>
         </div>
     </div>
 
     <footer>
         <p>&copy; 2026 Lunox Shop FR - Tous droits réservés.</p>
     </footer>
+
+    <script>
+        let cart = [];
+
+        function toggleCart() {
+            document.getElementById('cartSidebar').classList.toggle('open');
+        }
+
+        function addToCart(productName, price) {
+            cart.push({ name: productName, price: price });
+            updateCart();
+            // Ouvre automatiquement le panier quand on ajoute un produit
+            document.getElementById('cartSidebar').classList.add('open');
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCart();
+        }
+
+        function updateCart() {
+            const cartItemsContainer = document.getElementById('cartItems');
+            const cartCount = document.getElementById('cartCount');
+            const cartTotal = document.getElementById('cartTotal');
+
+            cartCount.textContent = cart.length;
+
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = '<p style="color: var(--text-muted); text-align: center; margin-top: 40px;">Ton panier est vide.</p>';
+                cartTotal.textContent = '0,00 €';
+                return;
+            }
+
+            let html = '';
+            let total = 0;
+
+            cart.forEach((item, index) => {
+                total += item.price;
+                html += `
+                    <div class="cart-item">
+                        <div>
+                            <strong>${item.name}</strong><br>
+                            <span style="color: var(--success);">${item.price.toFixed(2)} €</span>
+                        </div>
+                        <button class="remove-item" onclick="removeFromCart(${index})">✕</button>
+                    </div>
+                `;
+            });
+
+            cartItemsContainer.innerHTML = html;
+            cartTotal.textContent = total.toFixed(2) + ' €';
+        }
+    </script>
 
 </body>
 </html>
