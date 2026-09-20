@@ -15,6 +15,7 @@
             --text-muted: #949ba4;
             --danger: #ed4245;
             --success: #3ba55d;
+            --warning: #fee75c;
             --border: #23272a;
         }
 
@@ -34,9 +35,9 @@
 
         /* Header & Navbar */
         header {
-            background-color: rgba(21, 23, 32, 0.9);
+            background-color: rgba(21, 23, 32, 0.95);
             backdrop-filter: blur(10px);
-            padding: 20px 40px;
+            padding: 18px 40px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -53,6 +54,28 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            cursor: pointer;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--text-main);
         }
 
         .cart-btn {
@@ -78,7 +101,7 @@
         .cart-count {
             background-color: var(--accent);
             color: white;
-            padding: 2px 6px;
+            padding: 2px 7px;
             border-radius: 50%;
             font-size: 12px;
         }
@@ -90,14 +113,22 @@
             padding: 0 20px;
         }
 
+        .page-section {
+            display: none;
+        }
+
+        .page-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
         .hero {
             text-align: center;
-            margin-bottom: 50px;
-            animation: fadeInDown 0.8s ease;
+            margin-bottom: 40px;
         }
 
         .hero h1 {
-            font-size: 42px;
+            font-size: 40px;
             margin-bottom: 10px;
             background: linear-gradient(45deg, #ffffff, var(--accent));
             -webkit-background-clip: text;
@@ -112,7 +143,7 @@
         /* Grid Produits */
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 25px;
         }
 
@@ -125,7 +156,6 @@
             flex-direction: column;
             justify-content: space-between;
             transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
-            animation: fadeInUp 0.8s ease;
         }
 
         .card:hover {
@@ -156,7 +186,7 @@
             border-radius: 6px;
             font-size: 12px;
             font-weight: bold;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
         .badge.stock {
@@ -167,6 +197,49 @@
         .badge.out {
             background-color: rgba(237, 66, 69, 0.15);
             color: var(--danger);
+        }
+
+        .product-desc {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .sub-desc {
+            font-size: 12px;
+            color: #faa61a;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        /* Quantité & Bouton */
+        .card-actions {
+            padding: 0 24px 24px 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .quantity-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-hover);
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .quantity-box select {
+            background: var(--bg-color);
+            color: white;
+            border: 1px solid var(--border);
+            padding: 4px 8px;
+            border-radius: 6px;
+            outline: none;
+            font-weight: bold;
         }
 
         .btn {
@@ -198,16 +271,78 @@
             cursor: not-allowed;
         }
 
+        /* Page VIP */
+        .vip-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .vip-card {
+            background: linear-gradient(145deg, var(--card-bg), #1a1d29);
+            border-radius: 16px;
+            padding: 30px;
+            border: 1px solid var(--border);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+
+        .vip-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .vip-card.best {
+            border-color: var(--warning);
+            box-shadow: 0 0 25px rgba(254, 231, 92, 0.15);
+        }
+
+        .vip-badge {
+            position: absolute;
+            top: 15px;
+            right: -30px;
+            background: var(--warning);
+            color: #000;
+            font-size: 11px;
+            font-weight: bold;
+            padding: 4px 30px;
+            transform: rotate(45deg);
+        }
+
+        .vip-card h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .vip-features {
+            list-style: none;
+            text-align: left;
+            margin: 20px 0;
+            color: var(--text-muted);
+            font-size: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .vip-features li::before {
+            content: "✔ ";
+            color: var(--success);
+            font-weight: bold;
+        }
+
         /* Panier Latéral (Sidebar) */
         .cart-sidebar {
             position: fixed;
             top: 0;
-            right: -400px;
-            width: 380px;
+            right: -420px;
+            width: 400px;
             height: 100%;
             background-color: var(--card-bg);
             border-left: 1px solid var(--border);
-            box-shadow: -5px 0 25px rgba(0,0,0,0.5);
+            box-shadow: -5px 0 25px rgba(0,0,0,0.6);
             transition: right 0.4s cubic-bezier(0.1, 0.9, 0.2, 1);
             z-index: 1000;
             display: flex;
@@ -255,6 +390,7 @@
             border-radius: 8px;
             margin-bottom: 10px;
             font-size: 14px;
+            border: 1px solid var(--border);
         }
 
         .remove-item {
@@ -263,6 +399,7 @@
             border: none;
             cursor: pointer;
             font-weight: bold;
+            font-size: 16px;
         }
 
         .cart-total {
@@ -275,11 +412,11 @@
             padding-top: 15px;
         }
 
-        /* Section Paiement / Badoges */
+        /* Section Paiement & Logos SVG */
         .payment-methods {
             text-align: center;
-            margin-top: 40px;
-            padding: 20px;
+            margin-top: 50px;
+            padding: 25px;
             background-color: var(--card-bg);
             border-radius: 12px;
             border: 1px solid var(--border);
@@ -288,23 +425,21 @@
         .payment-methods p {
             color: var(--text-muted);
             font-size: 14px;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
         }
 
-        .payment-icons {
+        .payment-logos {
             display: flex;
             justify-content: center;
-            gap: 15px;
-            font-size: 14px;
-            font-weight: bold;
-            color: var(--text-main);
+            align-items: center;
+            gap: 25px;
+            flex-wrap: wrap;
         }
 
-        .badge-pay {
-            background: var(--card-hover);
-            padding: 6px 12px;
-            border-radius: 6px;
-            border: 1px solid var(--border);
+        .pay-logo {
+            height: 28px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+            object-fit: contain;
         }
 
         /* Footer */
@@ -317,13 +452,8 @@
             font-size: 14px;
         }
 
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
     </style>
@@ -331,132 +461,140 @@
 <body>
 
     <header>
-        <div class="logo">⚡ Lunox Shop FR</div>
+        <div class="logo" onclick="switchTab('shop')">⚡ Lunox Shop FR</div>
+        <div class="nav-links">
+            <button class="nav-link active" id="navShop" onclick="switchTab('shop')">Boutique</button>
+            <button class="nav-link" id="navVip" onclick="switchTab('vip')">VIP 👑</button>
+        </div>
         <button class="cart-btn" onclick="toggleCart()">
             🛒 Panier <span class="cart-count" id="cartCount">0</span>
         </button>
     </header>
 
     <div class="container">
-        <div class="hero">
-            <h1>Bienvenue sur Lunox Shop FR</h1>
-            <p>Tes abonnements Discord et jeux au meilleur prix du marché.</p>
-        </div>
 
-        <div class="products-grid">
-            <!-- Produit 1 : Discord Nitro -->
-            <div class="card">
-                <div class="card-content">
-                    <h3>Discord Nitro</h3>
-                    <span class="badge stock">En Stock</span>
-                    <p style="color: var(--text-muted);">Profite de tous les avantages Nitro (boosts, emojis animés, streaming HD).</p>
-                    <div class="price">7,69 €</div>
-                </div>
-                <div style="padding: 0 24px 24px 24px;">
-                    <button class="btn" onclick="addToCart('Discord Nitro', 7.69)">Ajouter au panier</button>
-                </div>
+        <!-- SECTION BOUTIQUE -->
+        <div id="shopSection" class="page-section active">
+            <div class="hero">
+                <h1>Boutique Officielle Lunox Shop</h1>
+                <p>Abos Discord et gaming au meilleur prix, livraison rapide et sécurisée.</p>
             </div>
 
-            <!-- Produit 2 : Robux (Rupture) -->
-            <div class="card">
-                <div class="card-content">
-                    <h3>Pack Robux (1000 Robux)</h3>
-                    <span class="badge out">Rupture de stock</span>
-                    <p style="color: var(--text-muted);">Recharge tes Robux directement sur ton profil Roblox.</p>
-                    <div class="price" style="color: var(--text-muted);">Indisponible</div>
-                </div>
-                <div style="padding: 0 24px 24px 24px;">
-                    <button class="btn disabled" disabled>Bientôt de retour</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Section Moyens de Paiement -->
-        <div class="payment-methods">
-            <p>Moyens de paiement acceptés et sécurisés :</p>
-            <div class="payment-icons">
-                <span class="badge-pay">🛡️ PayPal (Compte & Cartes Bancaires)</span>
-                <span class="badge-pay">💳 Mastercard</span>
-                <span class="badge-pay">💳 Visa</span>
-            </div>
-        </div>
-    </div>
-
-    <!-- Panier Latéral -->
-    <div class="cart-sidebar" id="cartSidebar">
-        <div class="cart-header">
-            <h3>Ton Panier</h3>
-            <button class="close-cart" onclick="toggleCart()">&times;</button>
-        </div>
-        <div class="cart-items" id="cartItems">
-            <p style="color: var(--text-muted); text-align: center; margin-top: 40px;">Ton panier est vide.</p>
-        </div>
-        <div>
-            <div class="cart-total">
-                <span>Total :</span>
-                <span id="cartTotal">0,00 €</span>
-            </div>
-            <!-- Remplace le lien ci-dessous par le lien de paiement de ton choix ou ton PayPal.me -->
-            <a href="https://paypal.me/TONCOMPTE" target="_blank" class="btn" style="text-align: center; display: block;">Payer via PayPal</a>
-        </div>
-    </div>
-
-    <footer>
-        <p>&copy; 2026 Lunox Shop FR - Tous droits réservés.</p>
-    </footer>
-
-    <script>
-        let cart = [];
-
-        function toggleCart() {
-            document.getElementById('cartSidebar').classList.toggle('open');
-        }
-
-        function addToCart(productName, price) {
-            cart.push({ name: productName, price: price });
-            updateCart();
-            // Ouvre automatiquement le panier quand on ajoute un produit
-            document.getElementById('cartSidebar').classList.add('open');
-        }
-
-        function removeFromCart(index) {
-            cart.splice(index, 1);
-            updateCart();
-        }
-
-        function updateCart() {
-            const cartItemsContainer = document.getElementById('cartItems');
-            const cartCount = document.getElementById('cartCount');
-            const cartTotal = document.getElementById('cartTotal');
-
-            cartCount.textContent = cart.length;
-
-            if (cart.length === 0) {
-                cartItemsContainer.innerHTML = '<p style="color: var(--text-muted); text-align: center; margin-top: 40px;">Ton panier est vide.</p>';
-                cartTotal.textContent = '0,00 €';
-                return;
-            }
-
-            let html = '';
-            let total = 0;
-
-            cart.forEach((item, index) => {
-                total += item.price;
-                html += `
-                    <div class="cart-item">
-                        <div>
-                            <strong>${item.name}</strong><br>
-                            <span style="color: var(--success);">${item.price.toFixed(2)} €</span>
-                        </div>
-                        <button class="remove-item" onclick="removeFromCart(${index})">✕</button>
+            <div class="products-grid">
+                <!-- Produit 1 : Discord Nitro 1 Mois -->
+                <div class="card">
+                    <div class="card-content">
+                        <h3>Discord Nitro (1 Mois)</h3>
+                        <span class="badge stock">En Stock</span>
+                        <p class="product-desc">Profite de tous les avantages Nitro (boosts, emojis animés, streaming HD).</p>
+                        <p class="sub-desc">⚠️ Garanti sans arnaque - Ce n'est pas un essai (not a trial).</p>
+                        <div class="price">7,69 €</div>
                     </div>
-                `;
-            });
+                    <div class="card-actions">
+                        <div class="quantity-box">
+                            <span>Quantité :</span>
+                            <select id="qty-nitro-1m">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                            </select>
+                        </div>
+                        <button class="btn" onclick="addToCart('Discord Nitro (1 Mois)', 7.69, 'qty-nitro-1m')">Ajouter au panier</button>
+                    </div>
+                </div>
 
-            cartItemsContainer.innerHTML = html;
-            cartTotal.textContent = total.toFixed(2) + ' €';
-        }
-    </script>
+                <!-- Produit 2 : Discord Nitro 1 An -->
+                <div class="card">
+                    <div class="card-content">
+                        <h3>Discord Nitro (1 An)</h3>
+                        <span class="badge stock">En Stock</span>
+                        <p class="product-desc">Abonnement Nitro complet valable pendant 12 mois entiers sur ton compte.</p>
+                        <p class="sub-desc">⚠️ Valide 1 an - Ce n'est pas un essai.</p>
+                        <div class="price">74,99 €</div>
+                    </div>
+                    <div class="card-actions">
+                        <div class="quantity-box">
+                            <span>Quantité :</span>
+                            <select id="qty-nitro-1y">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                            </select>
+                        </div>
+                        <button class="btn" onclick="addToCart('Discord Nitro (1 An)', 74.99, 'qty-nitro-1y')">Ajouter au panier</button>
+                    </div>
+                </div>
 
-</body>
-</html>
+                <!-- Produit 3 : Pack Robux -->
+                <div class="card">
+                    <div class="card-content">
+                        <h3>Pack 1000 Robux</h3>
+                        <span class="badge out">Rupture de stock</span>
+                        <p class="product-desc">Recharge tes Robux directement sur ton profil (via nos fournisseurs partenaires sécurisés).</p>
+                        <p class="sub-desc">🔄 Bientôt de retour en stock.</p>
+                        <div class="price" style="color: var(--text-muted);">8,99 €</div>
+                    </div>
+                    <div class="card-actions">
+                        <div class="quantity-box">
+                            <span>Quantité :</span>
+                            <select disabled>
+                                <option>0</option>
+                            </select>
+                        </div>
+                        <button class="btn disabled" disabled>Rupture de stock</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section Moyens de Paiement avec de vrais logos SVG propres -->
+            <div class="payment-methods">
+                <p>Moyens de paiement acceptés et 100% sécurisés :</p>
+                <div class="payment-logos">
+                    <!-- PayPal Logo -->
+                    <svg class="pay-logo" viewBox="0 0 100 32" xmlns="http://www.w3.org/2000/svg">
+                        <path fill="#253b80" d="M29.5 5.5c-1.2-.5-3-.9-5.4-.9h-7.6c-.5 0-.9.4-1 .9L12 28.5c0 .4.3.7.8.7h4.7l1.1-7 .3-1.8c.1-.4.4-.7.9-.7h2.9c4.8 0 8.6-1.9 9.7-7.5.5-2.5-.1-4.4-1.9-5.8zM24 13.8c-.5 2.8-2.7 2.8-4.9 2.8h-1.8l1.2-7.8h1.8c1.8 0 3.3 0 3.8 2.2.1.4.1.8-.1 2.8z"/>
+                        <path fill="#179bd7" d="M35.5 5.5c-1.2-.5-3-.9-5.4-.9h-7.6c-.5 0-.9.4-1 .9l-3.5 23c0 .4.3.7.8.7h4.8l1.2-7.9c.1-.4.4-.7.9-.7h3c4.8 0 8.6-1.9 9.7-7.5.6-2.6 0-4.5-1.9-5.9zM30 13.8c-.5 2.8-2.7 2.8-4.9 2.8h-1.8l1.2-7.8h1.8c1.8 0 3.3 0 3.8 2.2.1.4.1.8-.1 2.8z"/>
+                        <path fill="#222d65" d="M38.5 11.5c-1.2-.5-3-.9-5.4-.9h-7.6c-.5 0-.9.4-1 .9l-3.5 23c0 .4.3.7.8.7h4.7l1.2-7.9c.1-.4.4-.7.9-.7h3c4.8 0 8.6-1.9 9.7-7.5.5-2.6-.1-4.5-1.9-5.9zM33 19.8c-.5 2.8-2.7 2.8-4.9 2.8h-1.8l1.2-7.8h1.8c1.8 0 3.3 0 3.8 2.2.1.4.1.8-.1 2.8z"/>
+                    </svg>
+                    <!-- Mastercard Logo -->
+                    <svg class="pay-logo" viewBox="0 0 48 32" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="18" cy="16" r="12" fill="#eb001b"/>
+                        <circle cx="30" cy="16" r="12" fill="#f79e1b"/>
+                        <path fill="#ff5f00" d="M24 8.2c2.7 2.2 4.4 5.6 4.4 9.4s-1.7 7.2-4.4 9.4c-2.7-2.2-4.4-5.6-4.4-9.4s1.7-7.2 4.4-9.4z"/>
+                    </svg>
+                    <!-- Visa Logo -->
+                    <svg class="pay-logo" viewBox="0 0 60 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill="#1434CB" d="M22.5 0.5L14.7 19.3H9.7L5.5 4.6C5.2 3.4 4.9 3 4.1 2.5 2.6 1.6 0.8 1.1 0 0.9L0.2 0.5H7.4C8.4 0.5 9.3 1.2 9.5 2.3L11.3 11.9 16.9 0.5H22.5ZM51.3 13c0-2.1-3-2.2-3.1-3.2 0-0.3 0.3-0.6 1-0.7 0.3 0 1.2-0.1 2.2 0.4l0.4-2.1C51 7.1 50 6.9 48.9 6.9c-2.5 0-4.3 1.3-4.3 3.2 0 1.4 1.3 2.2 2.3 2.7 1 0.5 1.3 0.8 1.3 1.3 0 0.7-0.8 1-1.5 1-1.3 0-2-0.2-3-0.6l-0.4 2.2c0.6 0.3 1.8 0.6 3 0.6 2.9 0 4.8-1.4 4.8-3.4zM40.5 19.3h4.7L42 0.5h-4.5c-0.9 0-1.7 0.5-2 1.3L29.6 19.3h5l1-2.7h6.1l0.8 2.7zm-4.7-6.5l2.2-6.1 1.3 6.1H35.8ZM31.4 0.5H27l-4.2 18.8h5l4.4-18.8z"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION VIP -->
+        <div id="vipSection" class="page-section">
+            <div class="hero">
+                <h1>Avantages VIP Lunox Shop</h1>
+                <p>Découvre nos différents grades VIP et choisis celui qui te correspond !</p>
+            </div>
+
+            <div class="vip-grid">
+                <!-- Grade 3 : Premium -->
+                <div class="vip-card">
+                    <h3>👑 Premium</h3>
+                    <p style="color: var(--text-muted);">Le grade d'entrée pour les membres fidèles.</p>
+                    <ul class="vip-features">
+                        <li>Accès aux salons exclusifs</li>
+                        <li>Support prioritaire basique</li>
+                        <li>1 giveway VIP par mois</li>
+                        <li>Rôle exclusif sur le Discord</li>
+                    </ul>
+                </div>
+
+                <!-- Grade 2 : Premium+ -->
+                <div class="vip-card">
+                    <h3>💎 Premium+</h3>
+                    <p style="color: var(--text-muted);">Encore plus d'avantages et de réductions.</p>
+                    <ul class="vip-features">
+                        <li>Tous les avantages 
