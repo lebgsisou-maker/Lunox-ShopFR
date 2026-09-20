@@ -1,1 +1,206 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lunox Shop FR - Boutique Officielle</title>
+    <style>
+        :root {
+            --bg-color: #0f1016;
+            --card-bg: #181a26;
+            --accent: #5865F2;
+            --accent-hover: #4752C4;
+            --text-main: #ffffff;
+            --text-muted: #b9bbbe;
+            --danger: #ed4245;
+            --success: #3ba55d;
+        }
 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--card-bg);
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #2f3136;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--accent);
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .hero h1 {
+            font-size: 38px;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            color: var(--text-muted);
+            font-size: 18px;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #2f3136;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        .card title {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .price {
+            font-size: 22px;
+            font-weight: bold;
+            color: var(--success);
+            margin: 15px 0;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .badge.stock {
+            background-color: rgba(59, 165, 93, 0.15);
+            color: var(--success);
+        }
+
+        .badge.out {
+            background-color: rgba(237, 66, 69, 0.15);
+            color: var(--danger);
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            text-align: center;
+            background-color: var(--accent);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn:hover {
+            background-color: var(--accent-hover);
+        }
+
+        .btn.disabled {
+            background-color: #2f3136;
+            color: var(--text-muted);
+            cursor: not-allowed;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: var(--text-muted);
+            border-top: 1px solid #2f3136;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">Lunox Shop FR</div>
+        <div>Paiement sécurisé via PayPal</div>
+    </header>
+
+    <div class="container">
+        <div class="hero">
+            <h1>Bienvenue sur Lunox Shop FR</h1>
+            <p>Tes abonnements Discord et jeux au meilleur prix.</p>
+        </div>
+
+        <div class="products-grid">
+            <!-- Produit 1 : Discord Nitro -->
+            <div class="card">
+                <div class="card-content">
+                    <h3>Discord Nitro</h3>
+                    <span class="badge stock">En Stock</span>
+                    <p style="color: var(--text-muted);">Profite de tous les avantages Nitro au meilleur tarif.</p>
+                    <div class="price">7,69 €</div>
+                </div>
+                <div style="padding: 20px;">
+                    <!-- Remplace le lien '#' par ton lien de paiement PayPal.me ou ton bouton de commande -->
+                    <a href="https://paypal.me/TONCOMPTE" target="_blank" class="btn">Acheter via PayPal</a>
+                </div>
+            </div>
+
+            <!-- Produit 2 : Robux (Rupture) -->
+            <div class="card">
+                <div class="card-content">
+                    <h3>Pack Robux (1000 Robux)</h3>
+                    <span class="badge out">Rupture de stock</span>
+                    <p style="color: var(--text-muted);">Recharge tes Robux instantanément sur ton compte Roblox.</p>
+                    <div class="price" style="color: var(--text-muted);">Indisponible</div>
+                </div>
+                <div style="padding: 20px;">
+                    <button class="btn disabled" disabled>Bientôt de retour</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Lunox Shop FR - Tous droits réservés.</p>
+    </footer>
+
+</body>
+</html>
